@@ -8,8 +8,8 @@
  * 
  * “Algorithm” 
  * determine size of grid
- * create squares using divs
- * fill the grid with the squares
+ * create flex columns 
+ * fill the columns with squares
  * listen for mouse-over event 
  * change square div properties (ie color from white to black)
  * repeat 4 and 5.
@@ -21,29 +21,19 @@ const container = document.querySelector('#container');
 // sub - containers
 const controls = document.createElement('div');
 const grid = document.createElement('div');
-
-/* create divs */
 controls.classList.add('controls')
 grid.classList.add('main-grid');
-//squares
-const square = document.createElement('div');
-square.classList.add('square');
-const square2 = document.createElement('div');
-square2.classList.add('square');
 
-grid.appendChild(square);
-grid.appendChild(square2);
+/* create divs */
 
 // buttons
-
-
 const mkGridBtn = document.createElement('button');
-mkGridBtn.textContent = "new grid";
 const clrGridBtn = document.createElement('button');
+mkGridBtn.textContent = "new grid";
 clrGridBtn.textContent = "clear grid";
-
+// events
 mkGridBtn.addEventListener('click',drawGrid );
-
+clrGridBtn.addEventListener('click', clearGrid);
 controls.appendChild(mkGridBtn);
 controls.appendChild(clrGridBtn);
 
@@ -59,10 +49,8 @@ container.appendChild(grid);
 
 function getGridSize() {
     var width = prompt("enter width: ");
-    var height = prompt("enter height: ");
     // veryfiy the input string can be parsed as a number data type
     width = Math.floor(width - 0);
-    height = Math.floor(height - 0);
 
     if (typeof width === 'number'&& (width > 0) && (width <=100)) {
         
@@ -71,23 +59,38 @@ function getGridSize() {
         alert("invalid width, please enter an int 1->100 ");
         return;
     }
-    if (typeof height === 'number'&& (height > 0) && (height <=100)) {
-        
-        console.log(height);
-    } else {
-        alert("invalid height, please enter an int 1->100 ");
-        return;
+    return width;
+}
+
+
+function drawGrid() {
+    const boxLength = getGridSize();
+
+    for (var i=0;i<boxLength;i++) {
+        var column = document.createElement('div');
+        column.classList.add('col-grid');
+        grid.appendChild(column);
+        for (var j=0; j<boxLength; j++) {
+            var square = document.createElement('div');
+            square.classList.add('square');
+            
+            square.addEventListener('mouseover', function(e) {
+
+                e.target.setAttribute('style','background-color: hotpink;');
+            });
+            column.appendChild(square);
+            
+        }
     }
 
-    return {height: height, width: width};
 }
-function drawGrid() {
-    const coords = getGridSize();
-    var height = coords.height;
-    var width = coords.width;
 
-    console.log(width + " " + height);
-
-
+function clearGrid() {  
+    // select all of the columns
+    const cols = document.querySelectorAll('.col-grid');
+    cols.forEach((column) => {
+        grid.removeChild(column);
+    });
 }
+
 
