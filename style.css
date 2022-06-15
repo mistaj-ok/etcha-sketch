@@ -1,0 +1,27 @@
+#container {
+    display: flex;
+    margin-top: 10em;
+    flex-direction: column;
+    align-content: space-around;
+    justify-content: space-around;
+    gap: 2px;
+
+}
+.controls {
+    display: flex;
+    align-self: center;
+}
+.main-grid {
+    display: flex;
+    align-self: center;
+    height: 236px;
+    width: 236px;
+    border: solid teal .5em;
+    gap: .3em;
+}
+
+.square {
+    height: 16 px;
+    width: 16px;
+    background-color: tan;
+}
